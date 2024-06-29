@@ -48,6 +48,28 @@ def main():
         
         await interaction.response.send_message(formated)
     
+    @bot.tree.command(name='maybe-we-can-play')
+    @app_commands.describe(groups_input='Power outage of groups separated by space. For example: 2.1 1.1 3.3')
+    async def maybe_we_can_play(interaction: discord.Interaction, groups_input: str):
+        modified_input = groups_input.strip().lower()
+        
+        if not groups_valid(modified_input):
+            await interaction.response.send_message('Your input was not valid.')
+            return
+
+        splited_groups = modified_input.split()
+
+        try:
+            best_playtime = groups.get_possible_playtime(dataframes, splited_groups)
+        except ValueError as e:
+            await interaction.response.send_message(e)
+            return
+        
+        combined = features.combine_timespans(best_playtime)
+        formated = format_playtime_output(combined, optimal=False)
+
+        await interaction.response.send_message(formated)
+    
     bot.run(token)
 
 def groups_valid(groups_input: str) -> bool:
