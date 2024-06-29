@@ -10,9 +10,9 @@ def get_token():
 
     return secrets.get('token')
 
-def format_playtime_output(playtime, optimal=True):
-    if optimal:
-        output = '# Спільні зелені зони\n'
+def format_playtime_output(playtime, groups, green_only=True):
+    if green_only:
+        output = f'> # Спільні зелені зони для груп: {groups}\n'
     else:
         output = '# Спільні зелені i білі зони\n'
     
