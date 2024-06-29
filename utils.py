@@ -12,9 +12,9 @@ def get_token():
 
 def format_playtime_output(playtime, groups, green_only=True):
     if green_only:
-        output = f'> # Спільні зелені зони для груп: {groups}\n'
+        output = f'## Спільні зелені зони для груп: `{groups}`\n'
     else:
-        output = '# Спільні зелені i білі зони\n'
+        output = f'## Спільні зелені i білі зони для груп: `{groups}`\n'
     
     for day in WEEKDAYS:
         if len(playtime[day]) == 0:
