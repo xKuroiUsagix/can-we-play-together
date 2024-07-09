@@ -1,6 +1,6 @@
 import json
 
-from electricity_schedule.constants import WEEKDAYS
+from electricity_schedule.constants import WEEKDAYS, LAST_SCHEDULE_UPDATE
 from translation.utils import get_day_of_week
 
 
@@ -11,10 +11,12 @@ def get_token():
     return secrets.get('token')
 
 def format_playtime_output(playtime, groups, green_only=True):
+    output = f'## Графіки оновлені: {LAST_SCHEDULE_UPDATE}\n'
+    
     if green_only:
-        output = f'## Спільні зелені зони для груп: `{groups}`\n'
+        output += f'## Спільні зелені зони для груп: `{groups}`\n'
     else:
-        output = f'## Спільні зелені i білі зони для груп: `{groups}`\n'
+        output += f'## Спільні зелені i білі зони для груп: `{groups}`\n'
     
     for day in WEEKDAYS:
         if len(playtime[day]) == 0:
