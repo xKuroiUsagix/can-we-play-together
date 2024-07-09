@@ -10,13 +10,20 @@ def get_token():
 
     return secrets.get('token')
 
+def is_playtime_exists(playtime):
+    for day in WEEKDAYS:
+        if len(playtime[day]) > 0:
+            return True
+    return False
+
 def format_playtime_output(playtime, groups, green_only=True):
     output = f'## Графіки оновлені: {LAST_SCHEDULE_UPDATE}\n'
+
     gree_or_not = 'зелені' if green_only else 'зелені i білі'
-    exists_or_not = ' - відсутні' if len(groups) == 0 else ''
+    exists_or_not = '' if is_playtime_exists(playtime) else ' - відсутні'
     
     output += f'## Спільні {gree_or_not} зони для груп: `{groups}`{exists_or_not}\n'
-    
+
     for day in WEEKDAYS:
         if len(playtime[day]) == 0:
             continue
